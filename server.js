@@ -109,6 +109,88 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Serve the app shell — no index.html file needed
+app.get('/', (_req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo AI Agent</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">✓</div>
+        <span class="logo-text">Todo AI Agent</span>
+      </div>
+      <div class="agent-pills">
+        <div class="pill storage"><span class="pill-dot"></span><span>todo-storage MCP</span></div>
+        <div class="pill ai"><span class="pill-dot"></span><span>todo-ai MCP</span></div>
+      </div>
+    </header>
+    <main class="main">
+      <section class="chat-panel">
+        <div class="panel-title">
+          <span>AI Assistant</span>
+          <span class="panel-hint">Type naturally — e.g. "add buy groceries, high priority"</span>
+        </div>
+        <div class="messages" id="messages">
+          <div class="msg assistant">
+            <div class="bubble">
+              👋 Hi! I'm your Todo AI Agent powered by two MCP servers.<br><br>
+              <strong>Try:</strong><br>
+              &bull; "Add a todo: Review PR, high priority, due 2026-02-28"<br>
+              &bull; "What should I work on next?"<br>
+              &bull; "Prioritize my todos"<br>
+              &bull; "Summarize my tasks"
+            </div>
+          </div>
+        </div>
+        <form class="input-row" id="chat-form" autocomplete="off">
+          <input id="chat-input" type="text" placeholder="Ask me anything about your todos…" />
+          <button type="submit" id="send-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+          </button>
+        </form>
+      </section>
+      <section class="todos-panel">
+        <div class="panel-title">
+          <span>My Todos</span>
+          <div class="todos-controls">
+            <div class="filter-tabs" id="filter-tabs">
+              <button class="ftab active" data-filter="all">All</button>
+              <button class="ftab" data-filter="pending">Pending</button>
+              <button class="ftab" data-filter="completed">Done</button>
+            </div>
+            <button class="icon-btn" id="refresh-btn" title="Refresh">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6"/><path d="M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="todos-list" id="todos-list">
+          <div class="empty-state">
+            <div class="empty-icon">📋</div>
+            <p>No todos yet.<br>Start by chatting with the AI!</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>`);
+});
+
 /**
  * POST /api/chat
  *

@@ -63,12 +63,11 @@ You → "Add: Buy groceries, high priority"
 
 ```
 todo-agents/
-├── server.js                  # Express backend + MCP orchestrator
+├── server.js                  # Express backend + MCP orchestrator + serves HTML
 ├── servers/
 │   ├── todo-storage.js        # MCP Server 1 — CRUD operations
 │   └── todo-ai.js             # MCP Server 2 — AI analysis
 ├── public/
-│   ├── index.html             # Web UI
 │   ├── style.css              # Dark theme styles
 │   └── app.js                 # Frontend logic + SSE streaming
 ├── data/
@@ -76,6 +75,8 @@ todo-agents/
 ├── .env.example               # Environment variable template
 └── package.json
 ```
+
+> No `.html` file — the page is served directly from `server.js` as a template string via `GET /`.
 
 ---
 
