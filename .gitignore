@@ -1,0 +1,11 @@
+# dependencies
+node_modules/
+
+# environment — contains your API key, never commit this
+.env
+
+# data — todos are local state, not source code
+data/todos.json
+
+# OS
+.DS_Store
